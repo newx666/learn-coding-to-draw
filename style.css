@@ -1,0 +1,9 @@
+#app {
+    position: relative;
+}
+#app canvas {
+    border: 1px black solid;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
