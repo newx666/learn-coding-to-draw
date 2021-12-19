@@ -3,6 +3,7 @@
 /**
  * @typedef {import("./types").CanvasHelperOptions} Options
  * @typedef {import("./types").GridCanvasData} GridCanvasData
+ * @typedef {import("./types").Position} Position
  */
 
 const ANGLE_2_PI = Math.PI * 2;
@@ -45,7 +46,7 @@ export class CanvasHelper {
     this._ctx = canvas.getContext("2d");
 
     /**
-     * @type {{x: number; y: number}}
+     * @type {Position}
      * @protected
      */
     this._penPosition = { x: 0, y: 0 };
@@ -208,6 +209,14 @@ export class CanvasHelper {
     this._isPenDown = false;
     this.penShow();
     return this;
+  }
+
+  /**
+   * @type {Position}
+   * @readonly
+   */
+   get penPosition() {
+    return { ...this._penPosition };
   }
 
   /**

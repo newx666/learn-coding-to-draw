@@ -1,10 +1,12 @@
 /**
  * @typedef {import("./types").AppOptions} Options
+ * @typedef {import("./types").Position} Position
+ * @typedef {import("./types").Size} Size
  */
 
 import { CanvasHelper } from "./canvas-helper.js";
 
-export class App {
+export class DrawUnit {
   /**
    * @param {Options} options
    */
@@ -36,6 +38,12 @@ export class App {
      * @protected
      */
     this._draw = this._appendLayer("draw");
+
+    /**
+     * @type {boolean}
+     * @protected
+     */
+    this._isPenDown = false;
   }
 
   /**
@@ -58,6 +66,59 @@ export class App {
   }
 
   /**
+   * Down pen
+   * @returns {this}
+   */
+  penDown() {
+    this._pen.penDown();
+    this._isPenDown = true;
+    return this;
+  }
+
+  /**
+   * Up pen
+   * @returns {this}
+   */
+  penUp() {
+    this._pen.penUp();
+    this._isPenDown = false;
+    return this;
+  }
+
+  /**
+   * Offset pen and draw if pen is down
+   * @param {number} dx X move offset
+   * @param {number} dy Y move offset
+   */
+  moveOffset(dx, dy) {
+    this._pen.penOffset(dx, dy);
+    if (this._isPenDown) {
+      this._draw.drawLine(dx, dy);
+    } else {
+      this._draw.penOffset(dx, dy);
+    }
+  }
+
+  /**
+   * @type {Position}
+   * @readonly
+   */
+  get penPosition() {
+    return this._pen.penPosition;
+  }
+
+  /**
+   * @type {Size}
+   * @readonly
+   */
+  get fieldSize() {
+    return {
+      width: this._options.width,
+      height: this._options.height,
+    };
+  }
+
+  /**
    * @param {string} className
    * @returns {CanvasHelper}
    * @protected
@@ -73,11 +134,6 @@ export class App {
 
   _init() {
     this._grid.drawGrid();
-    //TODO: continue development logic.
-    // we have three canvas layers:
-    // * grid layer -- just for show grid
-    // * pen layer -- for show and hide pen
-    // * draw layer -- for show painting lines
     return this;
   }
 }
