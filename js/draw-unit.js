@@ -50,6 +50,8 @@ export class DrawUnit {
    * @returns {this}
    */
   reset() {
+    this.penUp();
+
     // clear all canvases
     this._grid.clear();
     this._pen.clear();
