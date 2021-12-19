@@ -37,6 +37,7 @@ export class KeyBinder {
     if (this._enabled) {
       return;
     }
+    this._enabled = true;
     window.addEventListener("keyup", this._handler);
   }
 
@@ -44,6 +45,7 @@ export class KeyBinder {
     if (!this._enabled) {
       return;
     }
+    this._enabled = false;
     window.removeEventListener("keyup", this._handler);
   }
 
