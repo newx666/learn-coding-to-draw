@@ -76,6 +76,11 @@ export class KeyBinder {
           this._executor.execute("penDown");
         }
         break;
+      case "KeyC":
+        if (confirm("Clear drawing?")) {
+          this._executor.execute("reset");
+        }
+        break;
     }
   }
 }
