@@ -112,10 +112,15 @@ export class DrawUnit {
    * @readonly
    */
   get fieldSize() {
-    return {
-      width: this._options.width,
-      height: this._options.height,
-    };
+    return this._grid.gridFieldSize;
+  }
+
+  /**
+   * @type {boolean}
+   * @readonly
+   */
+  get isPenDown() {
+    return this._isPenDown;
   }
 
   /**

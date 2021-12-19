@@ -81,11 +81,58 @@ export class CommandExecutor {
    * @param {Argument} argument
    */
   _execUp(argument) {
+    argument = argument ?? 1;
     const diff = this._parseNaturalNumberArgument(argument);
     if (this._drawUnit.penPosition.y - diff < 0) {
       throw new Error("The pen is out of field top");
     }
+    this._drawUnit.moveOffset(0, -diff);
+  }
+
+  /**
+   * @private
+   * @param {Argument} argument
+   */
+  _execDown(argument) {
+    argument = argument ?? 1;
+    const diff = this._parseNaturalNumberArgument(argument);
+    if (this._drawUnit.penPosition.y + diff > this._drawUnit.fieldSize.height) {
+      throw new Error("The pen is out of field bottom");
+    }
     this._drawUnit.moveOffset(0, diff);
+  }
+
+  /**
+   * @private
+   * @param {Argument} argument
+   */
+  _execLeft(argument) {
+    argument = argument ?? 1;
+    const diff = this._parseNaturalNumberArgument(argument);
+    if (this._drawUnit.penPosition.x - diff < 0) {
+      throw new Error("The pen is out of field left");
+    }
+    this._drawUnit.moveOffset(-diff, 0);
+  }
+
+  /**
+   * @private
+   * @param {Argument} argument
+   */
+  _execRight(argument) {
+    argument = argument ?? 1;
+    const diff = this._parseNaturalNumberArgument(argument);
+    if (this._drawUnit.penPosition.x + diff > this._drawUnit.fieldSize.width) {
+      throw new Error("The pen is out of field right");
+    }
+    this._drawUnit.moveOffset(diff, 0);
+  }
+
+  /**
+   * @private
+   */
+  _execReset() {
+    this._drawUnit.reset();
   }
 
   /**
@@ -95,9 +142,10 @@ export class CommandExecutor {
    */
   _parseNaturalNumberArgument(argument) {
     const result = Number(argument);
-    if (!Number.isSafeInteger() || result < 1) {
+    if (!Number.isSafeInteger(argument) || result < 1) {
       throw new Error("Incorrect number argument");
     }
+    return result;
   }
 }
 

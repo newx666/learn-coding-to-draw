@@ -1,14 +1,20 @@
 "use strict";
 
-import { App } from "./draw-unit.js";
+import { CommandExecutor } from "./command-executor.js";
+import { DrawUnit } from "./draw-unit.js";
+import { KeyBinder } from "./key-binder.js";
 
 const root = document.getElementById("app");
 if (!root) {
   throw new Error("Not found root element");
 }
 
-const app = new App({ root, width: 800, height: 600 });
+const drawUnit = new DrawUnit({ root, width: 800, height: 600 });
+const executor = new CommandExecutor(drawUnit);
+const keyBinder = new KeyBinder(executor, drawUnit);
+keyBinder.enable();
 
-app.reset();
+drawUnit.reset();
 
-window.APP = app;
+window.EX = executor;
+window.APP = drawUnit;

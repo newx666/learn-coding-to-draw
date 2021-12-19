@@ -4,6 +4,7 @@
  * @typedef {import("./types").CanvasHelperOptions} Options
  * @typedef {import("./types").GridCanvasData} GridCanvasData
  * @typedef {import("./types").Position} Position
+ * @typedef {import("./types").Size} Size
  */
 
 const ANGLE_2_PI = Math.PI * 2;
@@ -215,8 +216,19 @@ export class CanvasHelper {
    * @type {Position}
    * @readonly
    */
-   get penPosition() {
+  get penPosition() {
     return { ...this._penPosition };
+  }
+
+  /**
+   * @type {Size}
+   * @readonly
+   */
+  get gridFieldSize() {
+    return {
+      width: this._gridCanvasData.width,
+      height: this._gridCanvasData.height,
+    };
   }
 
   /**
@@ -243,8 +255,8 @@ export class CanvasHelper {
     this._ctx.clearRect(
       this._penPosition.x * this._options.gridSize - this._options.upPenRadius,
       this._penPosition.y * this._options.gridSize - this._options.upPenRadius,
-      this._currentPenRadius * 2,
-      this._currentPenRadius * 2
+      this._options.upPenRadius * 2,
+      this._options.upPenRadius * 2
     );
     return this;
   }
