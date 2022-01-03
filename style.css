@@ -1,9 +1,19 @@
-#app {
-    position: relative;
+#app .canvas-area {
+  position: relative;
 }
-#app canvas {
-    border: 1px black solid;
-    position: absolute;
-    left: 0;
-    top: 0;
+#app .canvas-area canvas {
+  border: 1px black solid;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+#app .code {
+  width: 100%;
+  min-height: 200px;
+}
+
+#app label span {
+  font-family: monospace;
+  color: #c83cb2;
+  background-color: #ffe1e1;
 }

@@ -30,3 +30,24 @@ export interface Size {
   width: number;
   height: number;
 }
+
+type Command = string;
+
+export type CommandDefinition = Record<
+  Command,
+  {
+    allowArguments: boolean;
+    defaultArgument?: string;
+  }
+>;
+
+export interface CommandParserOptions {
+  definitions: CommandDefinition;
+}
+
+export interface ParsedCommand {
+  command: string;
+  argument?: string;
+}
+
+export type ParsedCommandSeries = ParsedCommand[];

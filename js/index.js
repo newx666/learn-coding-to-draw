@@ -1,13 +1,24 @@
 "use strict";
 
-import { CommandExecutor } from "./command-executor.js";
+import { CommandExecutor, COMMAND_DEFINITIONS } from "./command-executor.js";
+import { CommandParser } from "./command-parser.js";
 import { DrawUnit } from "./draw-unit.js";
 import { KeyBinder } from "./key-binder.js";
 
 const root = document.getElementById("app");
-const bindKB = document.getElementById("bind-kb");
+const canvasArea = root.querySelector(".canvas-area");
+const bindKB = root.querySelector(".bind-kb");
 
-if (!root) {
+/** @type {HTMLTextAreaElement} */
+const codeInput = root.querySelector(".code");
+
+/** @type {HTMLButtonElement} */
+const runCodeBtn = root.querySelector(".code-run");
+
+/** @type {HTMLButtonElement} */
+const resetBtn = root.querySelector(".reset-btn");
+
+if (!canvasArea) {
   throw new Error("Not found root element");
 }
 
@@ -15,7 +26,7 @@ if (!bindKB) {
   throw new Error("Not found bind keyboard button element");
 }
 
-const drawUnit = new DrawUnit({ root, width: 800, height: 600 });
+const drawUnit = new DrawUnit({ root: canvasArea, width: 800, height: 600 });
 const executor = new CommandExecutor(drawUnit);
 drawUnit.reset();
 
@@ -37,6 +48,17 @@ bindKB.addEventListener("click", () => {
   }
 });
 
+const commandParser = new CommandParser({
+  definitions: COMMAND_DEFINITIONS,
+});
 
-window.EX = executor;
-window.APP = drawUnit;
+runCodeBtn.addEventListener("click", () => {
+  const commands = commandParser.parse(codeInput.value);
+  for (const { command, argument } of commands) {
+    executor.execute(command, argument);
+  }
+});
+
+resetBtn.addEventListener("click", () => {
+  executor.execute("reset");
+});

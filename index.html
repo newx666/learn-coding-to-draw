@@ -9,8 +9,28 @@
   </head>
   <body>
     <h1>Learn coding to draw</h1>
-    <div id="app" style="width: 800px; height: 600px;"></div>
-    <button id="bind-kb">Bind keyboard</button>
+    <div id="app">
+      <label>
+        <p>Write your code here.</p>
+        <p>
+          Allowed next commands:
+          <span>pen_up</span>, <span>pen_down</span>, <span>up</span>,
+          <span>down</span>, <span>left</span>,
+          <span>right</span>
+        </p>
+        <textarea class="code" spellcheck="false">pen_down
+up
+right
+down
+left
+pen_up
+</textarea>
+      </label>
+      <button type="button" class="code-run">Run</button>
+      <button type="button" class="reset-btn">Reset</button>
+      <div class="canvas-area" style="width: 800px; height: 600px"></div>
+      <button class="bind-kb">Bind keyboard</button>
+    </div>
     <script src="./js/index.js" type="module"></script>
   </body>
 </html>

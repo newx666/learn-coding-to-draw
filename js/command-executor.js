@@ -2,14 +2,15 @@
  * @typedef {string} Command
  * @typedef {string | null | undefined} Argument
  * @typedef {import("./draw-unit").DrawUnit} DrawUnit
+ * @typedef {import("./types").CommandDefinition} CommandDefinition
  */
 
 /**
  * @enum {Command}
  */
 const COMMANDS = {
-  PEN_UP: "penUp",
-  PEN_DOWN: "penDown",
+  PEN_UP: "pen_up",
+  PEN_DOWN: "pen_down",
   UP: "up",
   DOWN: "down",
   LEFT: "left",
@@ -142,7 +143,7 @@ export class CommandExecutor {
    */
   _parseNaturalNumberArgument(argument) {
     const result = Number(argument);
-    if (!Number.isSafeInteger(argument) || result < 1) {
+    if (!Number.isSafeInteger(result) || result < 1) {
       throw new Error("Incorrect number argument");
     }
     return result;
@@ -188,3 +189,33 @@ export class ExecuteCommandError extends Error {
     return this._argument;
   }
 }
+
+/** @type {CommandDefinition} */
+export const COMMAND_DEFINITIONS = {
+  [COMMANDS.PEN_UP]: {
+    allowArguments: false,
+  },
+  [COMMANDS.PEN_DOWN]: {
+    allowArguments: false,
+  },
+  [COMMANDS.UP]: {
+    allowArguments: true,
+    defaultArgument: 1,
+  },
+  [COMMANDS.DOWN]: {
+    allowArguments: true,
+    defaultArgument: 1,
+  },
+  [COMMANDS.LEFT]: {
+    allowArguments: true,
+    defaultArgument: 1,
+  },
+  [COMMANDS.RIGHT]: {
+    allowArguments: true,
+    defaultArgument: 1,
+  },
+  [COMMANDS.RESET]: {
+    allowArguments: true,
+    defaultArgument: 1,
+  },
+};
