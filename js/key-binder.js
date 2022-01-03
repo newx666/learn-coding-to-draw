@@ -73,9 +73,9 @@ export class KeyBinder {
         break;
       case "Space":
         if (this._drawUnit.isPenDown) {
-          this._executor.execute("penUp");
+          this._executor.execute("pen_up");
         } else {
-          this._executor.execute("penDown");
+          this._executor.execute("pen_down");
         }
         break;
       case "KeyC":
